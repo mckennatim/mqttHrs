@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webmqtt</title>
+	<script src="./dist/browserMqtt.js"></script>	
+</head>
+<body>
+	<h1>read and change device</h1>
+	roof heater on? <span id='lue'></span><br>
+	<button id="button" onclick="uclicked()">toggle device</button>
+	<script>
+		const deviceId ='AAAAA0'
+		const status = deviceId+'/status'
+		const cmd = deviceId +'/cmd'
+		var client = mqtt.connect('ws://localhost:3333')
+
+		var onoff = 1
+		function uclicked(){
+			//document.getElementById('lue').innerHTML=onoff
+			onoff=!onoff;
+			var thecmd =  "{ \"auto\":"+onoff*1+", \"src\":1 }"
+			console.log(thecmd);
+			client.publish(cmd, thecmd)
+		}
+		client.on('connect', function(){
+			console.log('maybe connected')
+			client.subscribe(status) 
+			client.on('message', function(topic, payload) {
+				var pls = payload.toString()
+				var plo = JSON.parse(pls)
+				console.log(plo)
+				console.log('['+topic+'] '+payload.toString())
+				document.getElementById('lue').innerHTML=!plo.auto
+			});	
+			client.publish('presence', 'Web Client is alive.. Test Ping! ');
+		});
+	</script>
+</body>
+</html>
