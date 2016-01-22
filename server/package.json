@@ -10,6 +10,9 @@
   "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
   "license": "MIT",
   "dependencies": {
+    "express": "4.13.3",
+    "http": "0.0.0",
+    "morgan": "1.6.1",
     "mosca": "1.0.1"
   }
 }

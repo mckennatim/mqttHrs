@@ -16,6 +16,30 @@ Besides the arduino development environment there is a <a href="http://nodemcu.c
 
 ### tags
 #### 0-mqtt-to_browser_and_back
+server + 2 node clients vii `mosca` and a webclient using `browserMqtt.js` as described in <a href="https://www.npmjs.com/package/mqtt#browser">mqtt browser</a> and another webclient using <a href="https://www.eclipse.org/paho/clients/js/">paho</a>
+#### 1-express+mosca
+Integrated `express` + `mosca` .  The esp8266/mqttHrs/mqttHrs.ino (now in mqttHrs) sends status whenever something changes. Received cmd's always cause a status event. 
+
+Incoming stream of bytes gets changed to characters and stored in the `incoming[]` character array. That gets converted to a String `sinc` . Now you can use `indexOf` to find the first `:` as in auto:1 which for some reason is still a `byte` code for the number. Subtracting the byte code for `0` gets you the integer value. Since the led is pulled up to vcc, a zero turns it ON, 1 turns it  OFF. 0/1 get immediately sent to that output `digitalWrite(ALED, relay)`. `oldLed` is a variable that is compared to `digitalRead(ALED)` in the main loop line 121 `if (oldHoah != hoah || oldHoaa != hoaa || oldLed != digitalRead(ALED))` . Whenever it is different it causes the `status` to get published to the mqtt broker and beyond. It is toggled on a command <2 (as seen below) and set to 2 otherwise. 
+
+
+      for (int i=0;i<length;i++) {
+        c = (char)payload[i];
+        incoming[i] = c;
+      }
+      incoming[length] = '\0';
+      String sinc = String(incoming).c_str();
+      rela = sinc[sinc.indexOf(':')+1];
+      relay = rela - '0';
+      if(relay<2){
+        digitalWrite(ALED, relay);
+        oldLed = !digitalRead(ALED);
+      } else {
+        oldLed=2;
+      }
+`auto:2` is for quering the microcontroller for its status. It will cause a publish event. `oldLed` gets set to match the output then to keep the esp8266 quiet until something else happens. (like maybe somebody turns the HOA switch).
+
+Now works on mobile devices. (change locahost to 10.0.1.102). Android complained about naming a variable `status`. 
 
 ### questions
 My <a href="https://github.com/mcollina/mosca/issues/399">github issue 339</a> and are resolved

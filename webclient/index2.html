@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">	
 	<title>webmqtt</title>
 	<script src="./dist/browserMqtt.js"></script>	
 </head>
 <body>
 	<h1>read and change device</h1>
-	roof heater on? <span id='lue'></span><br>
+	roof heater on  ? <span id='lue'></span><br>
 	<button id="button" onclick="uclicked()">toggle device</button>
 	<script>
 		const deviceId ='AAAAA0'
-		const status = deviceId+'/status'
+		const statu = deviceId+'/status'
 		const cmd = deviceId +'/cmd'
-		var client = mqtt.connect('ws://localhost:3333')
+		var client = mqtt.connect('ws://10.0.1.102:3333')
 
 		var onoff = 1
 		function uclicked(){
@@ -25,7 +26,7 @@
 		}
 		client.on('connect', function(){
 			console.log('maybe connected')
-			client.subscribe(status) 
+			client.subscribe(statu) 
 			client.on('message', function(topic, payload) {
 				var pls = payload.toString()
 				var plo = JSON.parse(pls)

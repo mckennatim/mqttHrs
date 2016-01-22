@@ -50,8 +50,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String sinc = String(incoming).c_str();
   rela = sinc[sinc.indexOf(':')+1];
   relay = rela - '0';
-  digitalWrite(ALED, relay);
-  oldLed = !digitalRead(ALED);
+  if(relay<2){
+    digitalWrite(ALED, relay);
+    oldLed = !digitalRead(ALED);
+  } else {
+    oldLed=2;
+  }
   Serial.println(sinc + relay);
 }
 void reconnect() {
