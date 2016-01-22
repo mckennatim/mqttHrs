@@ -1,6 +1,6 @@
 ## mqttHrs
 ### intro
-Based on <a href="https://github.com/mqttjs/MQTT.js">MQTT.js and <a href="https://github.com/mcollina/mosca"></a>mosca</a> as combined in <a href="https://github.com/arvindr21/mqttApp">mqttHrs</a> and using code as described in <a href="http://thejackalofjavascript.com/getting-started-mqtt/">getting-started-mqtt/</a> for node servers and clients. The esp8266 #includes <ESP8266WiFi.h> and <PubSubClient.h>
+Based on <a href="https://github.com/mqttjs/MQTT.js">MQTT.js and <a href="https://github.com/mcollina/mosca"></a>mosca</a> as combined in <a href="https://github.com/arvindr21/mqttApp">mqttHrs</a> and using code as described in <a href="http://thejackalofjavascript.com/getting-started-mqtt/">getting-started-mqtt/</a> for node servers and clients. The esp8266 #includes ESP8266WiFi.h and PubSubClient.h
 
 
 ### tags
